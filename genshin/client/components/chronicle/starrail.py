@@ -126,3 +126,22 @@ class StarRailBattleChronicleClient(base.BaseBattleChronicleClient):
         payload = dict(schedule_type=schedule_type, need_detail="true")
         data = await self._request_starrail_record("rogue", uid, lang=lang, payload=payload)
         return models.StarRailRogue(**data)
+
+    async def get_starrail_challenge_story(
+        self,
+        uid: typing.Optional[int] = None,
+        *,
+        previous: bool = False,
+        lang: typing.Optional[str] = None,
+    ) -> models.StarRailChallengeStory:
+        """Get starrail challenge runs."""
+        payload = dict(schedule_type=2 if previous else 1, need_all="true")
+        data = await self._request_starrail_record("challenge_story", uid, lang=lang, payload=payload)
+
+        # Unwrap the cycle info data. This is done to make the data consistent with memory of chaos data
+        data = dict(data)
+        data["schedule_id"] = data["groups"][0]["schedule_id"]
+        data["begin_time"] = data["groups"][0]["begin_time"]
+        data["end_time"] = data["groups"][0]["end_time"]
+
+        return models.StarRailChallengeStory(**data)
