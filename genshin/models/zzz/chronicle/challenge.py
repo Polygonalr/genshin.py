@@ -64,6 +64,12 @@ class ShiyuDefenseMonster(APIModel):
     id: int
     name: str
     weakness: ZZZElementType = Aliased("weak_element_type")
+    # Values for weaknesses below: -1 for resistant, 0 for neutral, 1 for weak
+    ice_weakness: int
+    fire_weakness: int
+    elec_weakness: int
+    ether_weakness: int
+    physics_weakness: int
     level: int
 
 

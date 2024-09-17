@@ -33,6 +33,7 @@ __all__ = (
 class ZZZElementType(enum.IntEnum):
     """ZZZ element type."""
 
+    NULL = 0
     PHYSICAL = 200
     FIRE = 201
     ICE = 202
